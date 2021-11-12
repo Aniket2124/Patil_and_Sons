@@ -1,0 +1,14 @@
+# Project exclude paths
+/venv/*
+/env/*
+.env
+#ignoring idea
+/.idea/*
+/.vscode/*
+# ignoring databases
+/.db.sqlite3/
+/business/migrations/*
+#ignoring pycache
+/business/__pycache__/*
+/business/migrations/__pycache__/*
+/core/__pycache__/*
