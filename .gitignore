@@ -6,7 +6,7 @@
 /.idea/*
 /.vscode/*
 # ignoring databases
-/db.sqlite3
+/db.sqlite3/*
 /business/migrations/*
 #ignoring pycache
 /business/__pycache__/*
