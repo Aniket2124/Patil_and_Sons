@@ -126,3 +126,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#register auth user model
+# AUTH_USER_MODEL = "business.CustomUser"
+# AUTHENTICATION_BACKENDS=['student_management_app.EmailBackEnd.EmailBackEnd']
