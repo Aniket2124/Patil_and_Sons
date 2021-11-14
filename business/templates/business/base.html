@@ -29,16 +29,21 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'signup'%}">Signup</a>
           </li>
+          {% elif not request.user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile'%}">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'change_pass'%}">Change Password</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'change_pass1'%}">Change Password 1</a>
+          </li>
+          <li><h6>Welcome,{{ name }}</h6></li>
           {% else %}
-          <!-- commented code is for dropdown -->
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Settings</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{% url 'profile'%}">Profile</a>
-              <a class="dropdown-item" href="{% url 'logout'%}">Logout</a>
-              <a class="dropdown-item" href="{% url 'change_pass'%}">Change Password</a>
-            </div>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'profile'%}">Profile</a>
           </li>
@@ -59,9 +64,20 @@
           </li>    
           <li class="nav-item">
             <a class="nav-link" href="{% url 'student'%}">Student</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_staff'%}">Add Staff</a>
           </li>  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin_hod'%}">Admin HOD</a>
+          </li>  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'course_details'%}">Course Details</a>
+          </li> 
+       
           <li><h6>Welcome,{{ name }}</h6></li>
           {% endif %}
+          
         </ul>
       </div>
     </nav>
@@ -79,7 +95,8 @@
   </body><div class="container">
     <!-- Content here -->
     {% block content %}
-  
+    
+         
   {% endblock %}
   </div>
   

@@ -11,11 +11,24 @@
 </head>
 <body>
     <h1>Profile</h1>
-    {% if messages %}
+    <div class="form-group">
+        {% if messages %}
+          {% for message in messages %}
+          {% if message.tags == 'error' %}
+          <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+          {% endif %}
+          {% if message.tags == 'success' %}
+          <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+          {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    <!-- {% if messages %}
     {% for message in messages %}
     <small {% if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</small>
     {% endfor %}
-    {% endif %}
+    {% endif %} -->
     <form action="" method="post">
         {% csrf_token %}<br>
         {% for fm in form %}

@@ -19,6 +19,19 @@
     
 </head>
 <body>
+  <div class="form-group">
+    {% if messages %}
+      {% for message in messages %}
+      {% if message.tags == 'error' %}
+      <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+      {% endif %}
+      {% if message.tags == 'success' %}
+      <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+      {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -32,7 +45,8 @@
           </div>
         </div>
         
-      
+        
+    </div>
     
     
 </body>

@@ -12,4 +12,8 @@ urlpatterns = [
     path('course/',views.course, name='course'),
     path('subject/',views.subject, name='subject'),
     path('student/',views.student, name='student'),
+    path('add_staff/',views.staff, name='add_staff'),
+    path('admin_hod/',views.admin_hod, name='admin_hod'),
+    path('course_details/',views.course_details, name='course_details'),
+    path('course_delete/',views.course_delete, name='course_delete'),
 ]

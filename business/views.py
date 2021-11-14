@@ -1,10 +1,13 @@
 from django.contrib.auth.models import User
+from django.http.response import HttpResponse
 from django.shortcuts import render,HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm,UserProfileForm,AdminProfileForm,Course,Subject,Student
+from .forms import SignUpForm,UserProfileForm,AdminProfileForm,Course,Subject,Student,Staff,HOD
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,SetPasswordForm
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
+from django.db import models
+from business.models import *
 
 # Create your views here.
 
@@ -113,7 +116,7 @@ def user_change_pass(request):
 
 
 
-
+#-------------------------------------------------------------------------------------------------------------------------------#
 # Course
 def course(request):
     if request.method == "POST":
@@ -126,6 +129,23 @@ def course(request):
         fm = Course()      
         return render(request,'business/course.html',{'form':fm})
 
+
+def course_details(request):
+    cor = Courses.objects.all()
+    return render(request,'business/course_details.html',{'course':cor})
+
+def course_delete(request):
+    if request.method == "POST":
+        cor = Courses.objects.all()
+        cor.delete()
+        messages.success(request,'Course Deleted Successfully..!')
+    return render(request,'business/course_details.html',{'course':cor})
+
+
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------#
 # Subject
 def subject(request):
     if request.method == "POST":
@@ -138,27 +158,63 @@ def subject(request):
         fm = Subject()      
         return render(request,'business/course.html',{'form':fm})
 
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------------#
 # Student
 def student(request):
-    user = User.objects.all()
-    print(user)
     if request.method == "POST":
-        fm = Student(request.POST)
-        print(fm)
+        fm = Student(request.POST,request.FILES)
+       
         if fm.is_valid():
-            print('------------------------------------')
-            print(fm)
             fm.save()
             messages.success(request,'Data Saved Successfully..!')
-            return HttpResponseRedirect('/')
-        else:
-            print('________________________________',{'form is not valid'})
-            fm = Student()
-            return render(request,'business/student.html',{'form':fm})
-
+            return HttpResponseRedirect('/')       
     else:  
         fm = Student()
     return render(request,'business/student.html',{'form':fm})
+
+
+
+
+#------------------------------------------------------------------------------------------------------------------------------#
+#Staff
+def staff(request):
+    if request.method == "POST":
+        fm = Staff(request.POST)
+        if fm.is_valid():
+            fm.save()
+            messages.success(request,'Data Saved Successfully..!')
+            return HttpResponseRedirect('/')
+    else:  
+        fm = Staff()      
+    return render(request,'business/add_staff.html',{'form':fm})
+
+
+
+
+#--------------------------------------------------------------------------------------------------------------------------------#
+#AdminHOD
+def admin_hod(request):
+    if request.method == "POST":
+        fm = HOD(request.POST)
+        if fm.is_valid():
+            fm.save()
+            messages.success(request,'Data Saved Successfully..!')
+            return HttpResponseRedirect('/')
+    else:  
+        fm = HOD()      
+    return render(request,'business/admin_hod.html',{'form':fm})
+
+
+
+
+
+
+
+
+
 
 
 

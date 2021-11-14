@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db.models.base import Model
 from django.forms import fields
-from .models import Courses,Subjects,Students
+from .models import Courses,Subjects,Students,Staffs,AdminHOD
 
 
 class SignUpForm(UserCreationForm):
@@ -40,7 +40,21 @@ class Subject(forms.ModelForm):
         fields = '__all__'
 
 class Student(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
     class Meta:
         model = Students
+        fields = '__all__'
+
+class Staff(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    class Meta:
+        model = Staffs
+        fields = '__all__'
+
+
+class HOD(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    class Meta:
+        model = AdminHOD
         fields = '__all__'
     
