@@ -134,12 +134,13 @@ def course_details(request):
     cor = Courses.objects.all()
     return render(request,'business/course_details.html',{'course':cor})
 
-def course_delete(request):
-    if request.method == "POST":
-        cor = Courses.objects.all()
-        cor.delete()
-        messages.success(request,'Course Deleted Successfully..!')
-    return render(request,'business/course_details.html',{'course':cor})
+def course_delete(request,id):
+    # if request.method == "POST":
+    cor = Courses.objects.get(pk=id)
+    cor.delete()
+    messages.success(request,'Course Deleted Successfully..!')
+    return HttpResponseRedirect('/',{'course':cor})
+    # return render(request,'business/course_details.html',{'course':cor})
 
 
 

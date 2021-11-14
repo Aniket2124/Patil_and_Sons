@@ -32,8 +32,8 @@
                         <th scope="row"></th><td>{{ cor.course_name }}</td></th>
                         <th scope="row"></th><td>{{ cor.created_at }}</td></th>
                         <th scope="row"></th><td>{{ cor.updated_at }}</td></th>
-                        <th scope="row"></th><td><button type="button" class="btn btn-danger">({{cor.}})</button></td></th>
-                      
+                        <th scope="row"></th><td><a data-confirm="Are you sure?" data-method="delete" href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a></td></th>
+                        <!-- <a data-confirm="Are you sure?" data-method="delete" href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a> -->
                       </tr>
                       
                       {% endfor %}
