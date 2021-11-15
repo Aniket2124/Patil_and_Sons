@@ -176,25 +176,25 @@ def student(request):
         fm = Student(request.POST,request.FILES)
        
         if fm.is_valid():
-            id = fm.cleaned_data.get("id")
-            name = fm.cleaned_data.get("name")
-            email = fm.cleaned_data.get("email")
-            password = fm.cleaned_data.get("password")
-            gender = fm.cleaned_data.get("gender")            
-            profile_pic = fm.cleaned_data.get("profile_pic")
-            address = fm.cleaned_data.get("address")
-            course_id = fm.cleaned_data.get("course_id")
-            session_start_year = fm.cleaned_data.get("session_start_year")
-            session_end_year = fm.cleaned_data.get("session_end_year")
-            created_at = fm.cleaned_data.get("created_at")
-            updated_at = fm.cleaned_data.get("updated_at")
+            # id = fm.cleaned_data.get("id")
+            # name = fm.cleaned_data.get("name")
+            # email = fm.cleaned_data.get("email")
+            # password = fm.cleaned_data.get("password")
+            # gender = fm.cleaned_data.get("gender")            
+            # profile_pic = fm.cleaned_data.get("profile_pic")
+            # address = fm.cleaned_data.get("address")
+            # course_id = fm.cleaned_data.get("course_id")
+            # session_start_year = fm.cleaned_data.get("session_start_year")
+            # session_end_year = fm.cleaned_data.get("session_end_year")
+            # created_at = fm.cleaned_data.get("created_at")
+            # updated_at = fm.cleaned_data.get("updated_at")
 
-            obj = Students.objects.create(id=id,name=name,email=email,password=password,gender=gender,profile_pic=profile_pic,address=address,
-            course_id=course_id,session_start_year=session_start_year,session_end_year=session_end_year,created_at=created_at,updated_at=updated_at)
+            # obj = Students.objects.create(id=id,name=name,email=email,password=password,gender=gender,profile_pic=profile_pic,address=address,
+            # course_id=course_id,session_start_year=session_start_year,session_end_year=session_end_year,created_at=created_at,updated_at=updated_at)
 
-            obj.save()
-            print(obj)
-            # fm.save()
+            # obj.save()
+            # print(obj)
+            fm.save()
             messages.success(request,'Student Created Successfully..!')
             return HttpResponseRedirect('/')       
     else:  

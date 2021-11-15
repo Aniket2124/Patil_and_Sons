@@ -19,5 +19,5 @@ urlpatterns = [
     path('course_details/',views.course_details, name='course_details'),
     path('course_delete/<int:id>/',views.course_delete, name='course_delete'),
     path('student_login/',views.student_login, name='student_login'),
-    # path('update_course/',views.update_course, name='update_course'),
+   
 ]
