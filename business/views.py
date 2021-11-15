@@ -117,23 +117,26 @@ def user_change_pass(request):
 
 
 #-------------------------------------------------------------------------------------------------------------------------------#
-# Course
+# Add Course
 def course(request):
     if request.method == "POST":
         fm = Course(request.POST)
         if fm.is_valid():
             fm.save()
-            messages.success(request,'Data Saved Successfully..!')
+            messages.success(request,'Course Saved Successfully..!')
             return HttpResponseRedirect('/')
+            
     else:  
         fm = Course()      
         return render(request,'business/course.html',{'form':fm})
 
-
+#Course Details
 def course_details(request):
     cor = Courses.objects.all()
     return render(request,'business/course_details.html',{'course':cor})
 
+
+#Course Delete
 def course_delete(request,id):
     # if request.method == "POST":
     cor = Courses.objects.get(pk=id)
@@ -141,6 +144,10 @@ def course_delete(request,id):
     messages.success(request,'Course Deleted Successfully..!')
     return HttpResponseRedirect('/',{'course':cor})
     # return render(request,'business/course_details.html',{'course':cor})
+
+
+
+
 
 
 
@@ -169,13 +176,50 @@ def student(request):
         fm = Student(request.POST,request.FILES)
        
         if fm.is_valid():
-            fm.save()
-            messages.success(request,'Data Saved Successfully..!')
+            id = fm.cleaned_data.get("id")
+            name = fm.cleaned_data.get("name")
+            email = fm.cleaned_data.get("email")
+            password = fm.cleaned_data.get("password")
+            gender = fm.cleaned_data.get("gender")            
+            profile_pic = fm.cleaned_data.get("profile_pic")
+            address = fm.cleaned_data.get("address")
+            course_id = fm.cleaned_data.get("course_id")
+            session_start_year = fm.cleaned_data.get("session_start_year")
+            session_end_year = fm.cleaned_data.get("session_end_year")
+            created_at = fm.cleaned_data.get("created_at")
+            updated_at = fm.cleaned_data.get("updated_at")
+
+            obj = Students.objects.create(id=id,name=name,email=email,password=password,gender=gender,profile_pic=profile_pic,address=address,
+            course_id=course_id,session_start_year=session_start_year,session_end_year=session_end_year,created_at=created_at,updated_at=updated_at)
+
+            obj.save()
+            print(obj)
+            # fm.save()
+            messages.success(request,'Student Created Successfully..!')
             return HttpResponseRedirect('/')       
     else:  
         fm = Student()
     return render(request,'business/student.html',{'form':fm})
 
+
+#Student Login
+def student_login(request):
+    if not request.user.is_authenticated:
+        if request.method=="POST":
+            fm = AuthenticationForm(request=request,data=request.POST)
+            if fm.is_valid():
+                uname = fm.cleaned_data['name']
+                upass = fm.cleaned_data['password']
+                user = authenticate(name=uname,password=upass)
+                if user is not None:
+                    login(request,user)
+                    return HttpResponseRedirect('/')
+        else:
+            fm = AuthenticationForm()
+        return render(request,'business/student_login.html',{'form': fm})
+    else:
+        messages.success(request, 'Login successfully...!')
+        return HttpResponseRedirect('/')
 
 
 

@@ -57,4 +57,5 @@ class HOD(forms.ModelForm):
     class Meta:
         model = AdminHOD
         fields = '__all__'
-    
+
+

@@ -12,3 +12,4 @@
 /business/__pycache__/*
 /business/migrations/__pycache__/*
 /core/__pycache__/*
+/media/*

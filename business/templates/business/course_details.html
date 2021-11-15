@@ -14,6 +14,7 @@
             <!-- /.card-header -->
             <!-- form start -->
             <form role="form" action="" method="POST">
+              {% csrf_token %}
                 <table class="table">
                     <thead>
                       <tr>
@@ -21,6 +22,7 @@
                         <th scope="col"><td>COURSE</td></th>
                         <th scope="col"><td>CREATED</td></th>
                         <th scope="col"><td>UPDATED</td></th>
+                        <!-- <th scope="col"><td>EDIT</td></th> -->
                         <th scope="col"><td>DELETE</td></th>
                       </tr>
                     </thead>
@@ -32,8 +34,10 @@
                         <th scope="row"></th><td>{{ cor.course_name }}</td></th>
                         <th scope="row"></th><td>{{ cor.created_at }}</td></th>
                         <th scope="row"></th><td>{{ cor.updated_at }}</td></th>
-                        <th scope="row"></th><td><a data-confirm="Are you sure?" data-method="delete" href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a></td></th>
-                        <!-- <a data-confirm="Are you sure?" data-method="delete" href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a> -->
+                        <!-- <th scope="row"></th><td> <button type="submit" class="bbtn btn-danger"><a href="{% url 'update_course' %}" rel="nofollow">Edit</a></button></td></th> -->
+                        <th scope="row"></th><td> <button type="submit" class="bbtn btn-danger"><a href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a></button></td></th>
+                      
+                       
                       </tr>
                       
                       {% endfor %}
