@@ -1,16 +1,38 @@
-# from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,User
 from django.db import models
 
+
 # Create your models here.
-# class CustomUser(AbstractUser):
+class CustomUser(AbstractUser):
+    is_admin = models.BooleanField('Is admin',default=False)
+    # is_active = models.BooleanField('Is active',default=False)
+    is_staff = models.BooleanField('Is staff',default=False)
+    is_student = models.BooleanField('Is student',default=False)
+
+    # email = models.EmailField(
+    #     verbose_name='email address',
+    #     max_length=255,
+    #     unique=True,
+    # )
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = []
+
+    # # objects = MyUserManager()
+
+    # def __str__(self):
+    #     return self.email
+
+
+
 #     user_type_data=((1,"HOD"),(2,"Staff"),(3,"Student"))
 #     user_type=models.CharField(default=1,choices=user_type_data,max_length=10)
 
 class AdminHOD(models.Model):
-    id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=255)
-    email=models.EmailField(max_length=255)  
-    password=models.CharField(max_length=255)    
+    # id=models.AutoField(primary_key=True)
+    # name=models.CharField(max_length=255)
+    # email=models.EmailField(max_length=255)  
+    # password=models.CharField(max_length=255)    
+    admin_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
@@ -20,10 +42,11 @@ class AdminHOD(models.Model):
         return self.name
 
 class Staffs(models.Model):
-    id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=255)
-    email=models.EmailField(max_length=255)  
-    password=models.CharField(max_length=255) 
+    # id=models.AutoField(primary_key=True)
+    # name=models.CharField(max_length=255)
+    # email=models.EmailField(max_length=255)  
+    # password=models.CharField(max_length=255) 
+    staff_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
     address=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
@@ -53,22 +76,24 @@ class Subjects(models.Model):
         return self.subject_name
 
 class Students(models.Model):
-    id=models.AutoField(primary_key=True)
-    name=models.CharField(max_length=255)
-    email=models.EmailField(max_length=255)  
-    password=models.CharField(max_length=255)  
+    # id=models.AutoField(primary_key=True)
+    # name=models.CharField(max_length=255)
+    # email=models.EmailField(max_length=255)  
+    # password=models.CharField(max_length=255)  
+    stud_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
     gender=models.CharField(max_length=255)
     profile_pic=models.ImageField(upload_to='profile')
     address=models.TextField()
     course_id=models.ForeignKey(Courses,on_delete=models.SET_NULL, null=True, blank=True)
     session_start_year=models.DateField()
     session_end_year=models.DateField()
-    created_at=models.DateTimeField(auto_now_add=True)
-    updated_at=models.DateTimeField(auto_now_add=True)
-    objects = models.Manager()
+    # created_at=models.DateTimeField(auto_now_add=True)
+    # updated_at=models.DateTimeField(auto_now_add=True)
+    # objects = models.Manager()
+    token =models.PositiveIntegerField()
 
     def __str__(self):
-        return self.name
+        return self.stud_record.username
 
 
 class Attendance(models.Model):

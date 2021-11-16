@@ -130,5 +130,5 @@ MEDIA_ROOT = BASE_DIR/'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #register auth user model
-# AUTH_USER_MODEL = "business.CustomUser"
-# AUTHENTICATION_BACKENDS=['student_management_app.EmailBackEnd.EmailBackEnd']
+AUTH_USER_MODEL = "business.CustomUser"
+# AUTHENTICATION_BACKENDS=['business.backends.CustomAuthn']

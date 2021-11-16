@@ -3,14 +3,14 @@ from business.models import AdminHOD,Staffs,Courses,Subjects,Students,Attendance
     ,LeaveReportStudent,LeaveReportStaff,FeedBackStudent,FeedBackStaffs
 
 # Register your models here.
-# from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin
 
-# from business.models import CustomUser
+from business.models import CustomUser
 
 
 # class UserModel(UserAdmin):
 #     pass
-# admin.site.register(CustomUser,UserModel)
+admin.site.register(CustomUser)#,UserModel)
 
 
 

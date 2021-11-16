@@ -9,12 +9,26 @@
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
+              <div class="form-group">
+                {% if messages %}
+                  {% for message in messages %}
+                  {% if message.tags == 'error' %}
+                  <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                  {% endif %}
+                  {% if message.tags == 'success' %}
+                  <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                  {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+          </div>
               <h3 class="card-title">Courses</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" action="" method="POST">
-              {% csrf_token %}
+            <!-- <form role="form" action="" method="POST">
+              {% csrf_token %} -->
                 <table class="table">
                     <thead>
                       <tr>
@@ -22,8 +36,8 @@
                         <th scope="col"><td>COURSE</td></th>
                         <th scope="col"><td>CREATED</td></th>
                         <th scope="col"><td>UPDATED</td></th>
-                        <!-- <th scope="col"><td>EDIT</td></th> -->
-                        <th scope="col"><td>DELETE</td></th>
+                        
+                        <th scope="col"><td>Action</td></th>
                       </tr>
                     </thead>
                     
@@ -31,11 +45,16 @@
                         {% for cor in course %}
                       <tr>
                         <th scope="row"><td>{{ cor.id }}</td></th>
-                        <th scope="row"></th><td>{{ cor.course_name }}</td></th>
-                        <th scope="row"></th><td>{{ cor.created_at }}</td></th>
-                        <th scope="row"></th><td>{{ cor.updated_at }}</td></th>
-                       
-                        <th scope="row"></th><td> <button type="submit" class="bbtn btn-danger"><a href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a></button></td></th>
+                        <th scope="row"><td>{{ cor.course_name }}</td></th>
+                        <th scope="row"><td>{{ cor.created_at }}</td></th>
+                        <th scope="row"><td>{{ cor.updated_at }}</td></th>
+                        <th scope="row"><td> <a href="{% url 'course_update' cor.id %}" class="btn btn-success btn-sm">EDIT</a>
+                          <form action="{% url 'course_delete' cor.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                       <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                      </form>
+                      </td></th>
+                        <!-- <th scope="row"></th><td> <button type="submit" class="bbtn btn-danger"><a href="{% url 'course_delete' cor.id %}" rel="nofollow">Delete</a></button></td></th> -->
                       
                        
                       </tr>
@@ -44,27 +63,14 @@
                     </tbody>
                 </table>     
 
-                <div class="form-group">
-                    {% if messages %}
-                      {% for message in messages %}
-                      {% if message.tags == 'error' %}
-                      <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
-                      {% endif %}
-                      {% if message.tags == 'success' %}
-                      <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
-                      {% endif %}
-                      {% endfor %}
-                    {% endif %}
-                  </div>
-
-              </div>
+               
               <!-- /.card-body -->
 
               <!-- <div class="card-footer">
                 <button type="submit" class="btn btn-primary btn-block">Add Staff</button>
                 {{ fm }}
               </div> -->
-            </form>
+            <!-- </form> -->
           </div>
           <!-- /.card -->
 

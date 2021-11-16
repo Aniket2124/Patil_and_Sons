@@ -17,7 +17,9 @@ urlpatterns = [
     path('add_staff/',views.staff, name='add_staff'),
     path('admin_hod/',views.admin_hod, name='admin_hod'),
     path('course_details/',views.course_details, name='course_details'),
+    path('course_update/<int:id>/',views.course_update, name='course_update'),
     path('course_delete/<int:id>/',views.course_delete, name='course_delete'),
     path('student_login/',views.student_login, name='student_login'),
+    path('otp_verification/',views.otp, name='otp'),
    
 ]

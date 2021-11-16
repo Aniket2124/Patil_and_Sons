@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate,login,logout,update_session_auth_ha
 from django.db import models
 from business.models import *
 
+
 # Create your views here.
 
 def home(request):
@@ -19,13 +20,38 @@ def sign_up(request):
     if request.method == "POST":
         fm = SignUpForm(request.POST)
         if fm.is_valid():
-            fm.save()
+           
+            abc=fm.save(commit=False)
+            print(abc)
+            abc.is_active=False
+    
+            abc.save()
+           
             messages.success(request,'Account Created Successfully..!')
-            return HttpResponseRedirect('/login/')
+            return HttpResponseRedirect('/otp_verification/')
     else:
         fm = SignUpForm()
     return render(request, 'business/signup.html', {'form':fm})
 
+
+#OTP
+def otp(request):
+    if request.method == "POST":
+        otp = request.POST.get('otp')
+        user = request.POST.get('username')
+        valid = CustomUser.objects.get(username=user)
+        try:
+            Students.objects.get(stud_record=valid,token=otp)
+        except:
+            messages.error(request,'Invalid OTP...!')
+            return HttpResponseRedirect('/otp_verification/')
+        else:
+            # if stu:
+            valid.is_active=True
+            valid.save()
+            return HttpResponseRedirect('/login/')
+
+    return render(request,'business/token_auth.html')
 
 #Login 
 def user_login(request):
@@ -117,6 +143,9 @@ def user_change_pass(request):
 
 
 #-------------------------------------------------------------------------------------------------------------------------------#
+
+
+
 # Add Course
 def course(request):
     if request.method == "POST":
@@ -130,10 +159,28 @@ def course(request):
         fm = Course()      
         return render(request,'business/course.html',{'form':fm})
 
+
 #Course Details
 def course_details(request):
     cor = Courses.objects.all()
     return render(request,'business/course_details.html',{'course':cor})
+
+
+
+#course Update/Edit
+def course_update(request,id):
+    if request.method == "POST":
+        cor_update = Courses.objects.get(pk=id)
+        fm = Course(request.POST, instance=cor_update)
+        if fm.is_valid():
+            messages.success(request,'Course Updated Successfully...!')
+            fm.save()
+            return HttpResponseRedirect('/course_details/')
+    else:
+        cor_update = Courses.objects.get(pk=id)
+        fm = Course(instance=cor_update)
+    return render(request,'business/course_update.html',{'form':fm})
+
 
 
 #Course Delete
@@ -142,7 +189,7 @@ def course_delete(request,id):
     cor = Courses.objects.get(pk=id)
     cor.delete()
     messages.success(request,'Course Deleted Successfully..!')
-    return HttpResponseRedirect('/',{'course':cor})
+    return HttpResponseRedirect('/course_details/')
     # return render(request,'business/course_details.html',{'course':cor})
 
 
@@ -154,6 +201,8 @@ def course_delete(request,id):
 
 
 #-------------------------------------------------------------------------------------------------------------------------------#
+
+
 # Subject
 def subject(request):
     if request.method == "POST":
