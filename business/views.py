@@ -20,38 +20,39 @@ def sign_up(request):
     if request.method == "POST":
         fm = SignUpForm(request.POST)
         if fm.is_valid():
-           
-            abc=fm.save(commit=False)
-            print(abc)
-            abc.is_active=False
+            fm.save()
+            # abc=fm.save(commit=False)
+            # print(abc)
+            # abc.is_active=False
     
-            abc.save()
-           
+            # abc.save()
+
             messages.success(request,'Account Created Successfully..!')
-            return HttpResponseRedirect('/otp_verification/')
+            return HttpResponseRedirect('/login/')
     else:
         fm = SignUpForm()
     return render(request, 'business/signup.html', {'form':fm})
 
 
-#OTP
-def otp(request):
-    if request.method == "POST":
-        otp = request.POST.get('otp')
-        user = request.POST.get('username')
-        valid = CustomUser.objects.get(username=user)
-        try:
-            Students.objects.get(stud_record=valid,token=otp)
-        except:
-            messages.error(request,'Invalid OTP...!')
-            return HttpResponseRedirect('/otp_verification/')
-        else:
-            # if stu:
-            valid.is_active=True
-            valid.save()
-            return HttpResponseRedirect('/login/')
 
-    return render(request,'business/token_auth.html')
+#OTP function using AbstractUser
+# def otp(request):
+#     if request.method == "POST":
+#         otp = request.POST.get('otp')
+#         user = request.POST.get('username')
+#         valid = CustomUser.objects.get(username=user)
+#         try:
+#             Students.objects.get(stud_record=valid,token=otp)
+#         except:
+#             messages.error(request,'Invalid OTP...!')
+#             return HttpResponseRedirect('/otp_verification/')
+#         else:
+#             # if stu:
+#             valid.is_active=True
+#             valid.save()
+#             return HttpResponseRedirect('/login/')
+
+#     return render(request,'business/token_auth.html')
 
 #Login 
 def user_login(request):
@@ -225,24 +226,7 @@ def student(request):
         fm = Student(request.POST,request.FILES)
        
         if fm.is_valid():
-            # id = fm.cleaned_data.get("id")
-            # name = fm.cleaned_data.get("name")
-            # email = fm.cleaned_data.get("email")
-            # password = fm.cleaned_data.get("password")
-            # gender = fm.cleaned_data.get("gender")            
-            # profile_pic = fm.cleaned_data.get("profile_pic")
-            # address = fm.cleaned_data.get("address")
-            # course_id = fm.cleaned_data.get("course_id")
-            # session_start_year = fm.cleaned_data.get("session_start_year")
-            # session_end_year = fm.cleaned_data.get("session_end_year")
-            # created_at = fm.cleaned_data.get("created_at")
-            # updated_at = fm.cleaned_data.get("updated_at")
-
-            # obj = Students.objects.create(id=id,name=name,email=email,password=password,gender=gender,profile_pic=profile_pic,address=address,
-            # course_id=course_id,session_start_year=session_start_year,session_end_year=session_end_year,created_at=created_at,updated_at=updated_at)
-
-            # obj.save()
-            # print(obj)
+           
             fm.save()
             messages.success(request,'Student Created Successfully..!')
             return HttpResponseRedirect('/')       
@@ -252,23 +236,27 @@ def student(request):
 
 
 #Student Login
-def student_login(request):
-    if not request.user.is_authenticated:
-        if request.method=="POST":
-            fm = AuthenticationForm(request=request,data=request.POST)
-            if fm.is_valid():
-                uname = fm.cleaned_data['name']
-                upass = fm.cleaned_data['password']
-                user = authenticate(name=uname,password=upass)
-                if user is not None:
-                    login(request,user)
-                    return HttpResponseRedirect('/')
-        else:
-            fm = AuthenticationForm()
-        return render(request,'business/student_login.html',{'form': fm})
+def student_details(request):
+    stu = Students.objects.all()   
+    return render(request,'business/student_details.html',{'stu':stu})
+
+
+#Student Update/Edit
+def student_update(request,id):
+    if request.method == "POST":
+        stu_update = Students.objects.get(pk=id)
+        fm = Student(request.POST, instance=stu_update)
+        if fm.is_valid():
+            messages.success(request,'Student Updated Successfully...!')
+            fm.save()
+            return HttpResponseRedirect('/student_details/')
     else:
-        messages.success(request, 'Login successfully...!')
-        return HttpResponseRedirect('/')
+        cor_update = Students.objects.get(pk=id)
+        fm = Student(instance=cor_update)
+    return render(request,'business/student_update.html',{'form':fm})
+
+
+
 
 
 

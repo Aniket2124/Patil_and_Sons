@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'business',
+    #3rd party apps
+    'phonenumber_field',
+    'django_countries',
+
+
 ]
 
 MIDDLEWARE = [
@@ -130,5 +135,5 @@ MEDIA_ROOT = BASE_DIR/'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #register auth user model
-AUTH_USER_MODEL = "business.CustomUser"
+# AUTH_USER_MODEL = "business.Profile"
 # AUTHENTICATION_BACKENDS=['business.backends.CustomAuthn']

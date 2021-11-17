@@ -1,13 +1,22 @@
-from django.contrib.auth.models import AbstractUser,User
+from django.contrib.auth.models import User,AbstractUser
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
+from django_countries.fields import CountryField
 
 
 # Create your models here.
-class CustomUser(AbstractUser):
-    is_admin = models.BooleanField('Is admin',default=False)
-    # is_active = models.BooleanField('Is active',default=False)
-    is_staff = models.BooleanField('Is staff',default=False)
-    is_student = models.BooleanField('Is student',default=False)
+class Profile(User):
+    contact_number = PhoneNumberField(blank=True)
+    location = CountryField(blank_label="Select Location")
+
+    
+
+
+# class CustomUser(AbstractUser):
+#     is_admin = models.BooleanField('Is admin',default=False)
+#     # is_active = models.BooleanField('Is active',default=False)
+#     is_staff = models.BooleanField('Is staff',default=False)
+#     is_student = models.BooleanField('Is student',default=False)
 
     # email = models.EmailField(
     #     verbose_name='email address',
@@ -32,7 +41,8 @@ class AdminHOD(models.Model):
     # name=models.CharField(max_length=255)
     # email=models.EmailField(max_length=255)  
     # password=models.CharField(max_length=255)    
-    admin_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
+    admin_record = models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True, blank=True)
+    # admin_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
@@ -46,7 +56,8 @@ class Staffs(models.Model):
     # name=models.CharField(max_length=255)
     # email=models.EmailField(max_length=255)  
     # password=models.CharField(max_length=255) 
-    staff_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
+    # staff_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
+    staff_record = models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True, blank=True)
     address=models.TextField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
@@ -80,7 +91,8 @@ class Students(models.Model):
     # name=models.CharField(max_length=255)
     # email=models.EmailField(max_length=255)  
     # password=models.CharField(max_length=255)  
-    stud_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
+    # stud_record = models.ForeignKey(CustomUser,on_delete=models.SET_NULL, null=True, blank=True)
+    stud_record = models.ForeignKey(Profile,on_delete=models.SET_NULL, null=True, blank=True)
     gender=models.CharField(max_length=255)
     profile_pic=models.ImageField(upload_to='profile')
     address=models.TextField()
@@ -90,7 +102,10 @@ class Students(models.Model):
     # created_at=models.DateTimeField(auto_now_add=True)
     # updated_at=models.DateTimeField(auto_now_add=True)
     # objects = models.Manager()
-    token =models.PositiveIntegerField()
+
+
+
+    # token =models.PositiveIntegerField()
 
     def __str__(self):
         return self.stud_record.username

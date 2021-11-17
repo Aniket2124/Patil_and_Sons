@@ -1,0 +1,79 @@
+{% extends 'business/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <div class="form-group">
+                {% if messages %}
+                  {% for message in messages %}
+                  {% if message.tags == 'error' %}
+                  <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                  {% endif %}
+                  {% if message.tags == 'success' %}
+                  <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                  {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+          </div>
+              <h3 class="card-title">Student Details</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <!-- <form role="form" action="" method="POST">
+              {% csrf_token %} -->
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col"><td>ID</td></th>
+                        <th scope="col"><td>PROFILE</td></th>
+                        <th scope="col"><td>NAME</td></th>
+                        <th scope="col"><td>COURSE</td></th>
+                        <th scope="col"><td>CONTACT</td></th>
+                        <th scope="col"><td>ADDRESS</td></th>
+                        <th scope="col"><td>JOIN DATE</td></th>
+                        
+                        <th scope="col"><td>Action</td></th>
+                      </tr>
+                    </thead>
+                    
+                    <tbody>
+                      
+                        {% for st in stu %}
+                      <tr>
+                        <th scope="row"><td>{{ st.id }}</td></th>
+                        <th scope="row"><td><img src="{{ st.profile_pic.url }}"/></td></th>
+                        <th scope="row"><td>{{ st.stud_record.first_name }}</td></th>                        
+                        <th scope="row"><td>{{ st.course_id }}</td></th>
+                        <th scope="row"><td>{{ st.stud_record.contact_number }}</td></th>
+                        <th scope="row"><td>{{ st.address }}</td></th>
+                        <th scope="row"><td>{{ st.session_start_year }}</td></th>
+
+                        <th scope="row"><td> <a href="{% url 'student_update' st.id %}" class="btn btn-success btn-sm">EDIT</a>
+                          
+                      
+                      </td></th>
+                       
+                      
+                       
+                      </tr>
+                      
+                      {% endfor %}
+                    </tbody>
+                </table>  
+          </div>
+        </div>
+        </div>
+    </div>
+  </section>
+
+
+
+{% endblock %}
