@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db.models.base import Model
 from django.forms import fields
-from .models import Courses,Subjects,Students,Staffs,AdminHOD,Profile#CustomUser
+from .models import Courses,Subjects,Students,Staffs,AdminHOD,Profile,Attendance#CustomUser
 from django.contrib.auth import get_user_model
 from django_countries.widgets import CountrySelectWidget
 User = get_user_model()
@@ -34,7 +34,7 @@ class UserProfileForm(UserChangeForm):
     password = None
     class Meta:
         model = Profile
-        fields = ['username','first_name','last_name','email','date_joined']
+        fields = ['username','first_name','last_name','email','date_joined','contact_number','location']
         labels = {'email':'Email'}
         widgets = {
             'username' : forms.TextInput(attrs={'class':'form-control'}),
@@ -42,7 +42,18 @@ class UserProfileForm(UserChangeForm):
             'last_name' : forms.TextInput(attrs={'class':'form-control'}),
             'email' : forms.EmailInput(attrs={'class':'form-control'}),
             'date_joined': forms.DateTimeInput(attrs={'class':'form-control'}),
+            'contact_number' : forms.TextInput(attrs={'class':'form-control'}),
+            'location': CountrySelectWidget(attrs={'class': 'form-control'}, layout='{widget}'),
         }
+    # class Meta(UserChangeForm):
+    #     model = Courses
+    #     fields = ['course_name']
+    #     widgets = {
+           
+    #         'course_name' : forms.TextInput(attrs={'class':'form-control'}),
+    #     }
+
+
 
 
 class AdminProfileForm(UserChangeForm):
@@ -72,7 +83,7 @@ class Subject(forms.ModelForm):
         fields = '__all__'
 
 class Student(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password = None #forms.CharField(label='Password', widget=forms.PasswordInput)
     class Meta:
         model = Students
         fields = '__all__'
@@ -88,6 +99,13 @@ class HOD(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
     class Meta:
         model = AdminHOD
+        fields = '__all__'
+
+
+class StudentAttendance(forms.ModelForm):
+    
+    class Meta:
+        model = Attendance
         fields = '__all__'
 
 

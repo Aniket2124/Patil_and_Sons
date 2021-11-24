@@ -2,12 +2,15 @@ from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.shortcuts import render,HttpResponseRedirect
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm,UserProfileForm,AdminProfileForm,Course,Subject,Student,Staff,HOD
+from .forms import SignUpForm,UserProfileForm,AdminProfileForm,Course,Subject,Student,Staff,StudentAttendance,HOD
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,SetPasswordForm
 from django.contrib.auth import authenticate,login,logout,update_session_auth_hash
 from django.db import models
 from business.models import *
+import random
+import http.client
+from django.conf import settings
 
 
 # Create your views here.
@@ -20,7 +23,9 @@ def sign_up(request):
     if request.method == "POST":
         fm = SignUpForm(request.POST)
         if fm.is_valid():
+         
             fm.save()
+    
             # abc=fm.save(commit=False)
             # print(abc)
             # abc.is_active=False
@@ -28,11 +33,29 @@ def sign_up(request):
             # abc.save()
 
             messages.success(request,'Account Created Successfully..!')
-            return HttpResponseRedirect('/login/')
+            return HttpResponseRedirect('/login/')  
+           
     else:
         fm = SignUpForm()
     return render(request, 'business/signup.html', {'form':fm})
 
+
+# def send_otp(contact_number,otp):
+#     conn = http.client.HTTPSConnection("api.msg91.com")
+#     authkey = settings.authkey
+#     headers = { 'content-type': "application/json" }
+#     url = "https://control.msg91.com/api/sendotp.php?otp="+otp+'&sender=ABC&message='+'Your otp is'+otp +'&contact_number''&authkey=', headers
+#     conn.request("GET", url,headers=headers)
+
+#     res = conn.getresponse()
+#     data = res.read()
+#     return None
+
+
+# def otp(request):
+#     contact_number = request.session['contact_number']
+#     context={'mobile':contact_number}
+#     return render(request,'business/otp.html',context)
 
 
 #OTP function using AbstractUser
@@ -237,14 +260,19 @@ def student(request):
 
 #Student Login
 def student_details(request):
-    stu = Students.objects.all()   
+    stu = Students.objects.all()
+    # if Students.objects.filter(id = id).exists():
+       
     return render(request,'business/student_details.html',{'stu':stu})
+    # return render(request,'business/student_details.html')
+   
 
 
 #Student Update/Edit
 def student_update(request,id):
     if request.method == "POST":
         stu_update = Students.objects.get(pk=id)
+        
         fm = Student(request.POST, instance=stu_update)
         if fm.is_valid():
             messages.success(request,'Student Updated Successfully...!')
@@ -288,6 +316,30 @@ def admin_hod(request):
     else:  
         fm = HOD()      
     return render(request,'business/admin_hod.html',{'form':fm})
+
+
+
+
+
+
+#------------------------------------------------------------------------------------------------------------------
+def stud_attendence(request):
+    if request.method == "POST":
+        fm = StudentAttendance(request.POST)
+        if fm.is_valid():
+            fm.save()
+            messages.success(request,'Your Attendence Is Successfull....!')
+            return HttpResponseRedirect('/')
+    else:
+        fm = StudentAttendance()
+        return render(request,'business/stud_attendence.html',{'form':fm})
+
+
+
+def view_attendence(request):
+    attendence = Attendance.objects.all()
+    stud = Profile.objects.filter()
+    return render(request,'business/view_attendence.html',{'attendence':attendence})
 
 
 

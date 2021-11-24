@@ -20,8 +20,10 @@ urlpatterns = [
     path('course_update/<int:id>/',views.course_update, name='course_update'),
     path('course_delete/<int:id>/',views.course_delete, name='course_delete'),
     # path('student_login/',views.student_login, name='student_login'),
-    # path('otp_verification/',views.otp, name='otp'),
+    # path('otp/',views.otp, name='otp'),
     path('student_details/',views.student_details, name='student_details'),
     path('student_update/<int:id>/',views.student_update, name='student_update'),
+    path('stud_attendence/',views.stud_attendence, name='stud_attendence'),
+    path('view_attendence/',views.view_attendence, name='view_attendence'),
    
 ]

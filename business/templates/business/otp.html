@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-4">
-        {% if messages %}
+        <!-- {% if messages %}
                   {% for message in messages %}
                   {% if message.tags == 'error' %}
                   <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
@@ -12,15 +12,18 @@
                   <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
                   {% endif %}
                   {% endfor %}
-                {% endif %}
-        <form action="" method="POST">
+                {% endif %} -->
+                <h3 class="text-center">Enter otp send to your Mobile no{{ message }}</h3>
+                <input type="text" placeholder="Enter OTP" class="form-control" name="otp">
+        <!-- <form action="" method="POST">
             {% csrf_token %}
             {% for fm in form %}
             {{fm.label_tag}}{{fm}}{{fm.errors|striptags}}<br><br>
             {% endfor %}
-            <!-- {{form.as_p}} -->
+            
+        
+        </form> -->
         <input type="submit" value="Submit"><br><br>
-        </form>
         
         <!-- {% if messages %}
         {% for message in messages %}

@@ -8,6 +8,7 @@ from django_countries.fields import CountryField
 class Profile(User):
     contact_number = PhoneNumberField(blank=True)
     location = CountryField(blank_label="Select Location")
+    otp = models.CharField(max_length=6)
 
     
 
